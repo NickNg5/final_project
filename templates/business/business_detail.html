@@ -3,4 +3,7 @@
 <h1>{{ business.title }}</h1>
 <p>{{ business.description }}</p>
 <p>Posted by {{ business.user.username }} on {{ business.created_at }}</p>
+{% if business.user == user %}
+<p><a href="{% url 'business_update' pk=business.id %}">Edit business</a></p>
+{% endif %}
 {% endblock %}

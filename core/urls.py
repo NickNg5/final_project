@@ -8,4 +8,5 @@ urlpatterns = patterns('',
      url(r'^business/create/$', BusinessCreateView.as_view(), name='business_create'),
      url(r'^business/$', BusinessListView.as_view(), name='business_list'),
      url(r'^business/(?P<pk>\d+)/$', BusinessDetailView.as_view(), name='business_detail'),
+     url(r'^business/update/(?P<pk>\d+)/$', BusinessUpdateView.as_view(), name='business_update')
 )
