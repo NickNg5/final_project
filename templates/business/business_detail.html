@@ -5,5 +5,6 @@
 <p>Posted by {{ business.user.username }} on {{ business.created_at }}</p>
 {% if business.user == user %}
 <p><a href="{% url 'business_update' pk=business.id %}">Edit business</a></p>
+<p><a href="{% url 'business_delete' pk=business.id %}">Delete business</a></p>
 {% endif %}
 {% endblock %}
