@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HamdenGrub - The official website for reviews or comments for local small businesses around Hamden, CT.</title>
+    <title>HamdenGrub - The official website for reviews pertaining to food around Hamden, CT.</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "css/base.css" %}" rel="stylesheet">
@@ -24,8 +24,9 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
+              <li><a href="{% url 'business_list' %}">Small Businesses/Restaurants</a></li>
+              <li><a href="{% url 'business_create' %}">Add Food Business</a></li>
               <li><a href="{% url 'auth_logout' %}">Logout</a></li>
-              <li><a href="{% url 'business_create' %}">Add business</a></li>
               {% else %}
               <li><a href="{% url 'auth_login' %}">Login</a></li>
               {% endif %}
