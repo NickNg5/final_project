@@ -2,8 +2,8 @@
 {% block content %}
 {% for business in object_list %}
 <div class="panel">
-  <h3>{{ business.title }}</h3>
-  <p>Posted by {{ business.user.username }} on {{ business.created_at }}</p>
+    <h3><a href="{{ business.get_absolute_url }}">{{ business.title }}</a></h3>
+    <p>Posted by {{ business.user.username }} on {{ business.created_at }}</p>
 </div>
 {% endfor %}
 {% endblock %}
