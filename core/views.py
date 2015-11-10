@@ -25,6 +25,13 @@ class BusinessDetailView(DetailView):
     model = Business
     template_name = 'business/business_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(BusinessDetailView, self).get_context_data(**kwargs)
+        business = Business.objects.get(id=self.kwargs['pk'])
+        comments = Comment.objects.filter(business=business)
+        context['comments'] = comments
+        return context
+
 class BusinessUpdateView(UpdateView):
     model = Business
     template_name = 'business/business_form.html'
