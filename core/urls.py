@@ -11,4 +11,5 @@ urlpatterns = patterns('',
      url(r'^business/update/(?P<pk>\d+)/$', BusinessUpdateView.as_view(), name='business_update'),
      url(r'^business/delete/(?P<pk>\d+)/$', BusinessDeleteView.as_view(), name='business_delete'),
      url(r'^business/(?P<pk>\d+)/comment/create/$', CommentCreateView.as_view(), name='comment_create'),
+     url(r'^business/(?P<business_pk>\d+)/comment/update/(?P<comment_pk>\d+)/$', CommentUpdateView.as_view(), name='comment_update'),
 )
