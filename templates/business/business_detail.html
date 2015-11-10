@@ -7,4 +7,5 @@
 <p><a href="{% url 'business_update' pk=business.id %}">Edit business</a></p>
 <p><a href="{% url 'business_delete' pk=business.id %}">Delete business</a></p>
 {% endif %}
+<p><a href="{% url 'comment_create' pk=business.id %}">Add Comment/Review</a></p>
 {% endblock %}
