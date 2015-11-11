@@ -78,7 +78,7 @@ class CommentUpdateView(UpdateView):
         return self.object.business.get_absolute_url()
 
     def get_object(self, *args, **kwargs):
-        object = super(AnswerUpdateView, self).get_object(*args, **kwargs)
+        object = super(CommentUpdateView, self).get_object(*args, **kwargs)
         if object.user != self.request.user:
             raise PermissionDenied()
         return object
@@ -92,7 +92,7 @@ class CommentDeleteView(DeleteView):
         return self.object.business.get_absolute_url()
 
     def get_object(self, *args, **kwargs):
-        object = super(AnswerDeleteView, self).get_object(*args, **kwargs)
+        object = super(CommentDeleteView, self).get_object(*args, **kwargs)
         if object.user != self.request.user:
             raise PermissionDenied()
         return object

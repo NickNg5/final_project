@@ -8,7 +8,7 @@
 <p><a href="{% url 'business_delete' pk=business.id %}">Delete business</a></p>
 {% endif %}
 {% if comments.count > 0 %}
-<h3>{{ comments.count }} Comment{{ comments.count|pluralize }}:</h3>
+<h3>{{ comments.count }} Review{{ comments.count|pluralize }}:</h3>
 {% endif %}
 {% for comment in comments %}
 <div class="panel">
@@ -20,5 +20,5 @@
     <p>Commented by {{ comment.user.username }} on {{ comment.created_at }}</p>
 </div>
 {% endfor %}
-<p><a href="{% url 'comment_create' pk=business.id %}">Add Comment/Review</a></p>
+<p><a href="{% url 'comment_create' pk=business.id %}">Add Review</a></p>
 {% endblock %}
