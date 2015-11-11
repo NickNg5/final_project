@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django.core.exceptions import PermissionDenied
 from .models import *
 
 class Home(TemplateView):
@@ -37,10 +38,22 @@ class BusinessUpdateView(UpdateView):
     template_name = 'business/business_form.html'
     fields = ['title', 'description']
 
+    def get_object(self, *args, **kwargs):
+        object = super(BusinessUpdateView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
+
 class BusinessDeleteView(DeleteView):
     model = Business
     template_name = 'business/business_confirm_delete.html'
     success_url = reverse_lazy('business_list')
+
+    def get_object(self, *args, **kwargs):
+        object = super(BusinessDeleteView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
 
 class CommentCreateView(CreateView):
     model = Comment
@@ -64,6 +77,12 @@ class CommentUpdateView(UpdateView):
     def get_success_url(self):
         return self.object.business.get_absolute_url()
 
+    def get_object(self, *args, **kwargs):
+        object = super(AnswerUpdateView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
+
 class CommentDeleteView(DeleteView):
     model = Comment
     pk_url_kwarg = 'comment_pk'
@@ -71,3 +90,9 @@ class CommentDeleteView(DeleteView):
 
     def get_success_url(self):
         return self.object.business.get_absolute_url()
+
+    def get_object(self, *args, **kwargs):
+        object = super(AnswerDeleteView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
