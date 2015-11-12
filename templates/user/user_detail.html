@@ -6,12 +6,13 @@
 <p>Last name: {{ user_in_view.last_name }}</p>
 {% if user_in_view == user %}
 <p><a href="{% url 'user_update' slug=user.username %}">Edit profile</a></p>
+<p><a href="{% url 'user_delete' slug=user.username %}">Delete account</a></p>
 {% endif %}
 <h3>Businesses ({{ businesss.count }})</h3>
 {% for business in businesss %}
 <p><a href="{{ business.get_absolute_url }}">{{ business.title }}</a></p>
 {% endfor %}
-<h3>Comments ({{ comments.count }})</h3>
+<h3>Reviews ({{ comments.count }})</h3>
 {% for comment in comments %}
 <p><a href="{{ comment.business.get_absolute_url }}">{{ comment.business.title }}</a></p>
 <p>> {{ comment.text }}</p>
