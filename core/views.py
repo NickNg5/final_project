@@ -109,10 +109,20 @@ class VoteFormView(FormView):
     def form_valid(self, form):
         user = self.request.user
         business = Business.objects.get(pk=form.data["business"])
-        prev_votes = Vote.objects.filter(user=user, business=business)
-        has_voted = (prev_votes.count()>0)
-        if not has_voted:
-            Vote.objects.create(user=user, business=business)
-        else:
-            prev_votes[0].delete()
+        try:
+            comment = Comment.objects.get(pk=form.data["comment"])
+            prev_votes = Vote.objects.filter(user=user, comment=comment)
+            has_voted = (prev_votes.count()>0)
+            if not has_voted:
+                Vote.objects.create(user=user, comment=comment)
+            else:
+                prev_votes[0].delete()
+            return redirect(reverse('business_detail', args=[form.data["business"]]))
+        except:
+            prev_votes = Vote.objects.filter(user=user, business=business)
+            has_voted = (prev_votes.count()>0)
+            if not has_voted:
+                Vote.objects.create(user=user, business=business)
+            else:
+                prev_votes[0].delete()
         return redirect('business_list')

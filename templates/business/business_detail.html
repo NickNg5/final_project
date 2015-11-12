@@ -18,6 +18,14 @@
     <p><a href="{% url 'comment_delete' business_pk=business.id comment_pk=comment.id %}">Delete Comment</a></p>
     {% endif %}
     <p>Commented by {{ comment.user.username }} on {{ comment.created_at }}</p>
+    <p>{{ comment.vote_set.all.count }} Vote{{comment.vote_set.all.count|pluralize }}</p>
+    <form method="post" action="{% url 'vote' %}">
+        {% csrf_token %}
+        <input type="hidden" name="comment" value="{{ comment.id }}" />
+        <input type="hidden" name="business" value="{{ business.id }}" />
+        <input type="hidden" name="user" value="{{ user.id }}" />
+        <button>+</button>
+    </form>
 </div>
 {% endfor %}
 {% if not user_comments %}
