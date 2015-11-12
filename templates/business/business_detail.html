@@ -20,5 +20,7 @@
     <p>Commented by {{ comment.user.username }} on {{ comment.created_at }}</p>
 </div>
 {% endfor %}
+{% if not user_comments %}
 <p><a href="{% url 'comment_create' pk=business.id %}">Add Review</a></p>
+{% endif %}
 {% endblock %}

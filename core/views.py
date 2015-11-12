@@ -31,6 +31,8 @@ class BusinessDetailView(DetailView):
         business = Business.objects.get(id=self.kwargs['pk'])
         comments = Comment.objects.filter(business=business)
         context['comments'] = comments
+        user_comments = Comment.objects.filter(business=business, user=self.request.user)
+        context['user_comments'] = user_comments
         return context
 
 class BusinessUpdateView(UpdateView):
@@ -64,6 +66,9 @@ class CommentCreateView(CreateView):
         return self.object.business.get_absolute_url()
 
     def form_valid(self, form):
+        business = Business.objects.get(id=self.kwargs['pk'])
+        if Comment.objects.filter(business=business, user=self.request.user).exists():
+            raise PermissionDenied()
         form.instance.user = self.request.user
         form.instance.business = Business.objects.get(id=self.kwargs['pk'])
         return super(CommentCreateView, self).form_valid(form)
