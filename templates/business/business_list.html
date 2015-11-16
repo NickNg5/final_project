@@ -3,7 +3,7 @@
 {% for business in object_list %}
 <div class="panel">
     <h3><a href="{{ business.get_absolute_url }}">{{ business.title }}</a></h3>
-    <p>Posted by <a href="{% url 'user_detail' slug=business.user.username %}">{{ business.user.username }}</a> on {{ business.created_at }}</p>
+    <p>Posted {% if business.visibility == 0 %} by <a href="{% url 'user_detail' slug=business.user.username %}">{{ business.user.username }}</a> {% endif %} on {{ business.created_at }}</p>
     <p>{{ business.vote_set.all.count }} Vote{{ business.vote_set.all.count|pluralize }}</p>
     <form method="post" action="{% url 'vote' %}">
         {% csrf_token %}

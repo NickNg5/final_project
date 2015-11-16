@@ -11,7 +11,7 @@ class Home(TemplateView):
 class BusinessCreateView(CreateView):
     model = Business
     template_name = 'business/business_form.html'
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'visibility']
     success_url = reverse_lazy('business_list')
 
     def form_valid(self, form):
@@ -62,7 +62,7 @@ class BusinessDeleteView(DeleteView):
 class CommentCreateView(CreateView):
     model = Comment
     template_name = 'comment/comment_form.html'
-    fields = ['text']
+    fields = ['text', 'visibility']
 
     def get_success_url(self):
         return self.object.business.get_absolute_url()
@@ -137,9 +137,9 @@ class UserDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         user_in_view = User.objects.get(username=self.kwargs['slug'])
-        businesss = Business.objects.filter(user=user_in_view)
+        businesss = Business.objects.filter(user=user_in_view).exclude(visibility=1)
         context['businesss'] = businesss
-        comments = Comment.objects.filter(user=user_in_view)
+        comments = Comment.objects.filter(user=user_in_view).exclude(visibility=1)
         context['comments'] = comments
         return context
 

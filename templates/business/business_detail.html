@@ -2,7 +2,7 @@
 {% block content %}
 <h1>{{ business.title }}</h1>
 <p>{{ business.description }}</p>
-<p>Posted by <a href="{% url 'user_detail' slug=business.user.username %}">{{ business.user.username }}</a> on {{ business.created_at }}</p>
+<p>Posted {% if business.visibility == 0 %} by <a href="{% url 'user_detail' slug=business.user.username %}">{{ business.user.username }}</a> {% endif %} on {{ business.created_at }}</p>
 {% if business.user == user %}
 <p><a href="{% url 'business_update' pk=business.id %}">Edit business</a></p>
 <p><a href="{% url 'business_delete' pk=business.id %}">Delete business</a></p>
@@ -17,7 +17,7 @@
     <p><a href="{% url 'comment_update' business_pk=business.id comment_pk=comment.id %}">Edit Comment</a></p>
     <p><a href="{% url 'comment_delete' business_pk=business.id comment_pk=comment.id %}">Delete Comment</a></p>
     {% endif %}
-    <p>Commented by <a href="{% url 'user_detail' slug=comment.user.username %}">{{ comment.user.username }}</a> on {{ comment.created_at }}</p>
+    <p>Commented {% if comment.visibility == 0 %} by <a href="{% url 'user_detail' slug=comment.user.username %}">{{ comment.user.username }}</a> {% endif %} on {{ comment.created_at }}</p>
     <p>{{ comment.vote_set.all.count }} Vote{{comment.vote_set.all.count|pluralize }}</p>
     <form method="post" action="{% url 'vote' %}">
         {% csrf_token %}
