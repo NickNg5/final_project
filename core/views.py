@@ -22,6 +22,7 @@ class BusinessCreateView(CreateView):
 class BusinessListView(ListView):
     model = Business
     template_name = 'business/business_list.html'
+    paginate_by = 5
 
 class BusinessDetailView(DetailView):
     model = Business
