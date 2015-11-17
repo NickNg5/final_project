@@ -4,12 +4,21 @@
 <div class="panel">
     <h3><a href="{{ business.get_absolute_url }}">{{ business.title }}</a></h3>
     <p>Posted {% if business.visibility == 0 %} by <a href="{% url 'user_detail' slug=business.user.username %}">{{ business.user.username }}</a> {% endif %} on {{ business.created_at }}</p>
-    <p>{{ business.vote_set.all.count }} Vote{{ business.vote_set.all.count|pluralize }}</p>
     <form method="post" action="{% url 'vote' %}">
-        {% csrf_token %}
-        <input type="hidden" name="business" value="{{ business.id }}" />
-        <input type="hidden" name="user" value="{{ user.id }}" />
-        <button>+</button>
+    <span class="badge">{{ business.comment_set.all.count }} Review{{  business.comment_set.all.count|pluralize }}</span>
+    <span class="badge">{{ business.vote_set.all.count }} Vote{{ business.vote_set.all.count|pluralize }}</span>
+    {% csrf_token %}
+    <input type="hidden" name="business" value="{{ business.id }}" />
+    <input type="hidden" name="user" value="{{ user.id }}" />
+        {% if business in user_votes %}
+        <button class="btn btn-link">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+        </button>
+        {% else %}
+        <button class="btn btn-link">
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+        </button>
+        {% endif %}
     </form>
 </div>
 {% empty %}

@@ -24,6 +24,12 @@ class BusinessListView(ListView):
     template_name = 'business/business_list.html'
     paginate_by = 5
 
+    def get_context_date(self, **kwargs):
+        context = super(BusinessListView, self).get_context_data(**kwargs)
+        user_votes = Business.objects.filter(vote__user=self.request.user)
+        context['user_votes'] = user_votes
+        return context
+
 class BusinessDetailView(DetailView):
     model = Business
     template_name = 'business/business_detail.html'
@@ -35,6 +41,8 @@ class BusinessDetailView(DetailView):
         context['comments'] = comments
         user_comments = Comment.objects.filter(business=business, user=self.request.user)
         context['user_comments'] = user_comments
+        user_votes = Comment.objects.filter(vote__user=self.request.user)
+        context['user_votes'] = user_votes
         return context
 
 class BusinessUpdateView(UpdateView):
